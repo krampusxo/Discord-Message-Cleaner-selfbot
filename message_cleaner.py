@@ -23,15 +23,12 @@ async def on_ready():
     print (client.user.id)
     print ('--------------------')
     print ('Type "' + str(cleanphrase) + '" in the channel you want to clean.')
-
-@client.event
-async def on_message(message):
-    counter = 0
-    if message.content.startswith(str(cleanphrase)) and message.author == client.user:
-        async for message in message.channel.history(limit=99999):
-            if message.author == client.user:
-                await message.delete()
-                counter += 1
+    if message.author == client.user:
+          try:
+            await message.delete()
+            counter += 1
+          except:
+            pass
         msg = "✅`Cleaned " + str(counter) + " messages.`"
         end = await message.channel.send(msg)
         await asyncio.sleep(1)
